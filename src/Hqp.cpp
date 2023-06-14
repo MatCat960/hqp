@@ -145,7 +145,7 @@ Eigen::VectorXd Hqp::solve(Eigen::MatrixXd p_j)
         btilde << bcbf + omega_star;
         // std::cout << "Btilde: " << btilde.transpose() << std::endl;
 
-        // f.tail(4) = 2 * omega_star.block<4, 1>(i,0);
+        f.tail(4) = 2 * omega_star.block<4, 1>(i,0);
         // std::cout << "\033[0;31m actual_omega_" << i << ": " << omega_star.block<4, 1>(i, 0).transpose() << "\033[0m\n";
         // std::cout << "\033[0;31mGradient: " << f.tail(4).transpose() << "\033[0m\n";
 
@@ -174,7 +174,10 @@ Eigen::VectorXd Hqp::solve(Eigen::MatrixXd p_j)
         // get solution [ux, uy, w, omega]
         auto sol = solver.getSolution();
         // std::cout << "Solution: " << sol.transpose() << std::endl;
+        
         Eigen::VectorXd omega_i = sol.tail(4);
+        omega_i = (omega_i.array() < 0.0).select(0, omega_i); // set negative values to zero
+        // std::cout << "\033[0;31m solution for constraint " << i << ": " << omega_i.transpose() << "\033[0m\n";
         // std::cout << "Omega_i: " << omega_i.transpose() << std::endl;
         // std::cout << "Solution: " << sol.transpose() << std::endl;
         // std::cout << "Optimal value for omega: " << omega_i << std::endl;
@@ -189,6 +192,7 @@ Eigen::VectorXd Hqp::solve(Eigen::MatrixXd p_j)
         }
     }
 
+    // std::cout << "\033[0;31m Final omega values: " << omega_star.transpose() << "\033[0m\n";
     // std::cout << "Final optimal omega values: " << omega_star.transpose() << std::endl;
 
     return omega_star;
