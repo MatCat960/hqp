@@ -97,12 +97,12 @@ Eigen::VectorXd Hqp::solve(Eigen::MatrixXd p_j)
         Acbf.insert(4 * i + 1, 0) = tan(fow_angle_ / 2);
         Acbf.insert(4 * i + 1, 1) = -1;
         Acbf.insert(4 * i + 1, 2) = (-p_j_i(0) - p_j_i(1) * tan(fow_angle_ / 2));
-        Acbf.insert(4 * i + 2, 0) = -2 * p_j_i(0);
-        Acbf.insert(4 * i + 2, 1) = -2 * p_j_i(1);
+        Acbf.insert(4 * i + 2, 0) = 2 * p_j_i(0);
+        Acbf.insert(4 * i + 2, 1) = 2 * p_j_i(1);
         Acbf.insert(4 * i + 2, 2) = 0;
         // std::cout << "SONO QUI"<<std::endl;    
-        Acbf.insert(4 * i + 3, 0) = 2 * p_j_i(0);
-        Acbf.insert(4 * i + 3, 1) = 2 * p_j_i(1);
+        Acbf.insert(4 * i + 3, 0) = -2 * p_j_i(0);
+        Acbf.insert(4 * i + 3, 1) = -2 * p_j_i(1);
         Acbf.insert(4 * i + 3, 2) = 0;
         // std::cout <<"SONO UQI 2" << std::endl;
         bcbf(4 * i, 0) = h(0); // + slack(i,0);
