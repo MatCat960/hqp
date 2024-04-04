@@ -22,12 +22,14 @@ class Hqp
         Eigen::VectorXd lowerbound;
         Eigen::VectorXd upperbound;
         bool solver_init;
+        bool initialized;
         
 
 
     public:
-        Hqp(double fow_angle, double min_distance, double max_distance, int num_robots);
+        Hqp();
         ~Hqp();
+        void init(double fow_angle, double min_distance, double max_distance, int num_robots);
         Eigen::VectorXd solve(Eigen::MatrixXd p_j);
         Eigen::VectorXd solve(std::vector<Eigen::VectorXd> p_j_i);
         int solveUnordered(Eigen::MatrixXd &p_j_i, Eigen::MatrixXd slack);

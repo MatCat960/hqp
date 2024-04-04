@@ -1,9 +1,19 @@
 #include "hqp/Hqp.h"
 #include "OsqpEigen/OsqpEigen.h"
 
-
-Hqp::Hqp(double fow_angle, double min_distance, double max_distance, int num_robots) : fow_angle_(fow_angle), min_distance_(min_distance), max_distance_(max_distance), num_robots_(num_robots)
+Hqp::Hqp()
 {
+    initialized = false;
+}
+
+
+void Hqp::init(double fow_angle, double min_distance, double max_distance, int num_robots)
+{
+    fow_angle_ = fow_angle;
+    min_distance_ = min_distance;
+    max_distance_ = max_distance;
+    num_robots_ = num_robots;
+
     H.resize(7, 7); // set sparse matrix size
     H.setZero();    // set all zeros
     f.resize(7);
@@ -31,7 +41,7 @@ Hqp::Hqp(double fow_angle, double min_distance, double max_distance, int num_rob
     lowerbound = -std::numeric_limits<double>::infinity() * lowerbound;
 
     
-
+    initialized = true;
     solver_init = false;
 
 }

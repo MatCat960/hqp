@@ -19,7 +19,7 @@ private:
     Eigen::MatrixXd p_j, slacks;
 
 public:
-    Subscribe_And_Publish(): hqp_solver(1.57,1.0,6.0,3)
+    Subscribe_And_Publish(): hqp_solver()
     {
         // sub = n.subscribe<geometry_msgs::Twist> ("/cmd_vel_in", 1, &Subscribe_And_Publish::vel_callback, this);
         // pose_subs.push_back(n.subscribe<geometry_msgs::Pose>("/pose1",1,[this](const geometry_msgs::Pose::ConstPtr &msg){this->pose_callback(msg,1);}));
@@ -27,6 +27,7 @@ public:
         // pose_subs.push_back(n.subscribe<geometry_msgs::Pose>("/pose3",1,[this](const geometry_msgs::Pose::ConstPtr &msg){this->pose_callback(msg,3);}));
         // pub = n.advertise<geometry_msgs::TwistStamped> ("/cmd_vel_out", 1);
         timer = n.createTimer(ros::Duration(2.0), &Subscribe_And_Publish::timerCallback,this);
+        hqp_solver.init(1.57,1.0,6.0,3);
         hqp_solver.setVerbose(false);
         
         // p_i << 0.0,0.0,0.0;
